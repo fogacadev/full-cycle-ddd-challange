@@ -121,27 +121,40 @@ describe("Order repository test", () => {
     await orderRepository.update(orderUp);
 
     const orderModel = await OrderModel.findOne({
-      where: { id: order.id },
+      where: { id: orderUp.id },
       include: ["items"],
     });
-
   
-    console.log(orderModel.total);
-    
     console.log(orderModel.toJSON())
-  
-    expect(orderModel.toJSON()).toStrictEqual({
-      id: "123",
+
+    console.log({
+      id: orderUp.id,
       customer_id: customer.id,
       total: 80,
       items: [
         {
-          id: orderItem.id,
-          name: orderItem.name,
-          price: orderItem.price,
-          quantity: orderItem.quantity,
-          order_id: order.id,
-          product_id: orderItem.productId,
+          id: orderItemUp.id,
+          name: orderItemUp.name,
+          price: orderItemUp.price,
+          quantity: orderItemUp.quantity,
+          order_id: orderUp.id,
+          product_id: orderItemUp.productId,
+        },
+      ],
+    })
+
+    expect(orderModel.toJSON()).toStrictEqual({
+      id: orderUp.id,
+      customer_id: customer.id,
+      total: 80,
+      items: [
+        {
+          id: orderItemUp.id,
+          name: orderItemUp.name,
+          price: orderItemUp.price,
+          quantity: orderItemUp.quantity,
+          order_id: orderUp.id,
+          product_id: orderItemUp.productId,
         },
       ],
     });
